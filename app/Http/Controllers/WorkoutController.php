@@ -4,72 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Workout;
+use App\Http\Requests\StoreWorkoutRequest;
 
 class WorkoutController extends Controller
 {
     public function index()
     {
-        $workouts = Workout::all();
-        return response()->json(['workouts' => $workouts], 200);
+        return Workout::all();
     }
 
-    public function store(Request $request)
+    public function store(StoreWorkoutRequest $request)
     {
-        $request->validate([
-            'workout_date' => 'required|date',
-            'exercise_name' => 'required|string',
-            'weight_lifted' => 'required|integer',
-            'max_percentage' => 'required|integer',
-            'is_successful' => 'required|boolean',
-        ]);
-
-        $workout = Workout::create($request->all());
-
-        return response()->json(['workout' => $workout], 201);
+        return Workout::create($request->all());
     }
 
-    public function show($id)
+    public function show(Workout $workout)
     {
-        $workout = Workout::find($id);
-
-        if (!$workout) {
-            return response()->json(['message' => 'Workout not found'], 404);
-        }
-
-        return response()->json(['workout' => $workout], 200);
+        return response()->json($workout);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Workout $workout)
     {
-        $workout = Workout::find($id);
-
-        if (!$workout) {
-            return response()->json(['message' => 'Workout not found'], 404);
-        }
-
-        $request->validate([
-            'workout_date' => 'required|date',
-            'exercise_name' => 'required|string',
-            'weight_lifted' => 'required|integer',
-            'max_percentage' => 'required|integer',
-            'is_successful' => 'required|boolean',
-        ]);
-
         $workout->update($request->all());
-
-        return response()->json(['message' => 'Workout updated successfully'], 200);
+        return response()->json($workout);
     }
 
-    public function destroy($id)
+    public function destroy(Workout $workout)
     {
-        $workout = Workout::find($id);
-
-        if (!$workout) {
-            return response()->json(['message' => 'Workout not found'], 404);
-        }
-
         $workout->delete();
-
-        return response()->json(['message' => 'Workout deleted successfully'], 200);
+        return response()->json(null, 204);
     }
 }

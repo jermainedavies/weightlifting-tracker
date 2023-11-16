@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Workout extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'workout_date', 'exercise_name', 'weight_lifted', 'max_percentage', 'is_successful',
+        'user_id', 'date',
     ];
 }

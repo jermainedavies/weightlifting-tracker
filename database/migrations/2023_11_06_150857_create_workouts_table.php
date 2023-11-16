@@ -14,6 +14,7 @@ public function up(): void
 {
     Schema::create('workouts', function (Blueprint $table) {
         $table->id();
+        // TODO? name: date
         $table->date('workout_date');
         $table->string('exercise_name');
         $table->integer('weight_lifted');
