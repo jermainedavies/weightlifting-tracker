@@ -14,9 +14,16 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+
     public function store(Request $request)
     {
-        $user = User::create($request->all());
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+        ]);
+
+        $user = User::create($validatedData);
         return response()->json($user, 201);
     }
 
@@ -27,7 +34,13 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->update($request->all());
+        $validatedData = $request->validate([
+            'name' => 'string|max:255',
+            'email' => 'email|unique:users,email,' . $user->id,
+            // Add other validation rules as needed
+        ]);
+
+        $user->update($validatedData);
         return response()->json($user);
     }
 

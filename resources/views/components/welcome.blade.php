@@ -1,7 +1,28 @@
 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
-    <x-application-logo class="block h-12 w-auto" />
 
-    <h1 class="mt-8 text-2xl font-medium text-gray-900">
+<h1 class="text-2xl font-bold mb-4">{{ __('Are You Sure You Want To Logout?') }}</h1> 
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}" x-data>
+                                @csrf
+
+                                <x-dropdown-link href="{{ route('logout') }}"
+                                         @click.prevent="$root.submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>    
+
+                            <form method="GET" action="{{ route('login') }}" x-data>
+                                @csrf
+
+                                <x-dropdown-link href="{{ route('login') }}"
+                                         @click.prevent="$root.submit();">
+                                    {{ __('Go Back') }}
+                                </x-dropdown-link>
+                            </form>    
+
+<!-- <x-application-logo class="block h-12 w-auto" /> -->
+
+    <!-- <h1 class="mt-8 text-2xl font-medium text-gray-900">
         Welcome to your Jetstream application!
     </h1>
 
@@ -92,5 +113,5 @@
         <p class="mt-4 text-gray-500 text-sm leading-relaxed">
             Authentication and registration views are included with Laravel Jetstream, as well as support for user email verification and resetting forgotten passwords. So, you're free to get started with what matters most: building your application.
         </p>
-    </div>
+    </div> -->
 </div>
