@@ -9,7 +9,7 @@ class CreateWorkoutsTable extends Migration
     public function up()
     {
         Schema::create('workouts', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->uuid('user_id');
             $table->date('date');
             $table->timestamps();
